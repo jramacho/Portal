@@ -6,6 +6,7 @@ import Cliente from "./components/Cliente"
 import Comentarios from "./components/Comentarios"
 import Rodape from "./components/Rodape"
 import Tabela from "./components/Tabela"
+import TableForm from "./components/TableForm"
 import "./components/tableped.css"
 
 
@@ -26,10 +27,12 @@ function App() {
   const [comentarios, setComentarios] = useState("")
   const [colaborador, setColaborador] = useState("")
   const [cargo, setCargo] = useState("")
-
-const handlePrint = () => {
-  window.print ()
-  }
+  const [descrição, setDescrição] = useState("")
+  const [preço, setPreço] = useState("")
+  const [quantidade, setQuantidade] = useState("")
+  const [total, setTotal] = useState("")
+  const [list, setList] = useState([])
+  const handlePrint = () => { window.print () }
 
   
 return (
@@ -39,10 +42,11 @@ return (
       {showInvoice ? (
       <div>
       <Cabeçalho handlePrint={handlePrint}/>
-      <Colaborador colaborador={colaborador} cargo={cargo} email={email}/>
+      <Colaborador colaborador={colaborador} cargo={cargo} />
       <Cliente cliente={cliente} clienteend={clienteend} />
       <Datas pedidodata={pedidodata} pedidovenc={pedidovenc} pedidonum={pedidonum}/>
-      <Tabela/>
+      <Tabela descrição={descrição} preço={preço} quantidade={quantidade} total={total}
+      list={list} setList={setList}/>
       <Comentarios comentarios={comentarios}/>
       <Rodape cliente={cliente} email={email} website={website} colaborador={colaborador} conta={conta}
       banco={banco} telefone={telefone}/>
@@ -53,7 +57,7 @@ return (
       </div>
        ) : (
       <div className="flex flex-col justify-center ">
-        <article className='md:grid grid-cols-2 gap-10'>
+        <article className='md:grid grid-cols-3 gap-10'>
         <div className='flex flex-col'>
         <label htmlFor='colaborador'>Nome</label>
       <input 
@@ -66,7 +70,7 @@ return (
       onChange={(e) => setColaborador (e.target.value)}
       />
         </div> 
-        <div>
+        <div className="flex flex-col">
         <label htmlFor='cargo'>Cargo</label>
       <input 
       type='text'
@@ -117,12 +121,9 @@ return (
       />
           </div>
         </article>
-      
-
-
-
-     
-      <label htmlFor='banco'>banco</label>
+      <article className='md:grid grid-cols-2 gap-10'>
+      <div className='flex flex-col'>
+      <label htmlFor='banco'>Banco</label>
       <input 
       type='text'
       banco='banco'
@@ -132,6 +133,8 @@ return (
       value={banco}
       onChange={(e) => setBanco (e.target.value)}
       />
+      </div>
+      <div className='flex flex-col'>
       <label htmlFor='conta'>Conta</label>
       <input 
       type='text'
@@ -142,7 +145,11 @@ return (
       value={conta}
       onChange={(e) => setConta (e.target.value)}
       />
-      <label htmlFor='cliente'>Nome do Cliente</label>
+      </div>
+      </article>
+<article className='md:grid grid-cols-2 gap-10  md:mt-10'>
+<div className="flex flex-col">
+<label htmlFor='cliente'>Nome do Cliente</label>
       <input 
       type='text'
       cliente='cliente'
@@ -152,6 +159,8 @@ return (
       value={cliente}
       onChange={(e) => setCliente(e.target.value)}
       />
+</div>
+      <div className='flex flex-col'>
       <label htmlFor='clienteend'>Endereço do cliente</label>
       <input 
       type='text'
@@ -162,7 +171,11 @@ return (
       value={clienteend}
       onChange={(e) => setClienteEnd (e.target.value)}
       />
-      <label htmlFor='pedidonum'>Pedido Numero</label>
+      </div>
+</article>
+<article className='md:grid grid-cols-3 gap-10'>
+  <div className='flex flex-col'>
+  <label htmlFor='pedidonum'>Pedido Numero</label>
       <input 
       type='text'
       pedidonum='pedidonum'
@@ -172,7 +185,9 @@ return (
       value={pedidonum}
       onChange={(e) => setPedidoNum (e.target.value)}
       />
-       <label htmlFor='pedidodata'>Pedido Data</label>
+  </div>
+  <div className='flex flex-col'>
+  <label htmlFor='pedidodata'>Pedido Data</label>
       <input 
       type='date'
       pedidodata='pedidodata'
@@ -182,7 +197,10 @@ return (
       value={pedidodata}
       onChange={(e) => setPedidoData (e.target.value)}
       />
-      <label htmlFor='pedidovenc'>Pedido Vencimento</label>
+  </div>
+  <div className='flex flex-col'>
+
+  <label htmlFor='pedidovenc'>Pedido Vencimento</label>
       <input 
       type='date'
       pedidovenc='pedidovenc'
@@ -192,6 +210,15 @@ return (
       value={pedidovenc}
       onChange={(e) => setPedidoVenc (e.target.value)}
       />
+  </div>
+
+</article>
+<article>
+  <TableForm descrição={descrição} setDescrição={setDescrição} preço={preço}
+   setPreço={setPreço} quantidade={quantidade} setQuantidade={setQuantidade} 
+   total={total} setTotal={setTotal} list={list} setList={setList}/>
+</article>
+     
       <label htmlFor='comentarios'>Comentarios</label>
       <textarea comentarios="comentarios" id='comentarios' cols="30" rows="10"
       placeholder='Comentarios' value={comentarios} 
