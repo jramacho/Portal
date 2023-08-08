@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import {v4 as uuidv4} from 'uuid'
 export default function TableForm({descrição, setDescrição, quantidade, setQuantidade,
    preço, setPreço, total, setTotal, list, setList}) {
+    
+    // envio form
     const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -20,12 +22,18 @@ export default function TableForm({descrição, setDescrição, quantidade, setQ
     setList([...list, newItems])
     }
     
+    //Calcula itens
     useEffect(() => {
         const calculaTotal = (total) => {
         setTotal(quantidade * preço)
     }
     calculaTotal(total)
 },[total, preço, quantidade, setTotal])
+
+//Editar Botoes
+
+
+//Deleter botão
   return (
     <>
 <form onSubmit={handleSubmit}>
